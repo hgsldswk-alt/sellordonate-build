@@ -1,0 +1,76 @@
+name: SellOrDonate
+options:
+  deploymentTarget:
+    iOS: "17.0"
+  developmentLanguage: en
+  knownRegions: [en, zh-Hans, zh-Hant, ja]
+settings:
+  base:
+    APP_ID: com.hgsldswk.sellordonate
+    APP_STORE_ID: "6838245421"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    SWIFT_VERSION: "5.0"
+    CODE_SIGN_STYLE: Automatic
+targets:
+  SellOrDonate:
+    type: application
+    platform: iOS
+    sources: [SellOrDonate, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(APP_ID)
+        TARGETED_DEVICE_FAMILY: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+      configs:
+        Release:
+          CODE_SIGN_STYLE: Manual
+          CODE_SIGN_IDENTITY: Apple Distribution
+          PROVISIONING_PROFILE_SPECIFIER: SellOrDonate AppStore
+    info:
+      path: SellOrDonate/Info.plist
+      properties:
+        CFBundleDisplayName: Sell or Donate
+        CFBundleDevelopmentRegion: en
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        ITSAppUsesNonExemptEncryption: false
+        APP_STORE_ID: $(APP_STORE_ID)
+  SellOrDonateTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources: [SellOrDonateTests, Shared]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(APP_ID).tests
+        GENERATE_INFOPLIST_FILE: YES
+  SellOrDonateUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [SellOrDonateUITests]
+    dependencies:
+      - target: SellOrDonate
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(APP_ID).uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: SellOrDonate
+schemes:
+  SellOrDonate:
+    build:
+      targets:
+        SellOrDonate: all
+        SellOrDonateTests: [test]
+    test:
+      config: Debug
+      targets: [SellOrDonateTests]
+  SellOrDonateUI:
+    build:
+      targets:
+        SellOrDonate: all
+        SellOrDonateUITests: [test]
+    test:
+      config: Debug
+      targets: [SellOrDonateUITests]
